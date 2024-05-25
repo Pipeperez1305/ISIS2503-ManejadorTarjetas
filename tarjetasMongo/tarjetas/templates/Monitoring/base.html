@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block head %}
+        <title>Banco Alpes</title>
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+            {% comment %} <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="/tarjetas/">
+                <img src="ISIS2503-MICROSERVICES-APPDJANGO/tarjetas/tarjetas/media/monitor.png" width="80" height="80" alt="">
+                </a>
+            </nav> {% endcomment %}
+
+          <nav class="navbar navbar-dark bg-dark">
+              <a class="navbar-brand" href="/tarjetas/">
+                  Banco Alpes
+              </a>
+          </nav>
+
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="/tarjetas/">Tarjetas</a>
+                </li> {% endcomment %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/tarjetacreate/">Crear Tarjeta</a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
+
+
+        <main>
+          <div class="container" style="min-height: 580px;">
+          {% block content %}
+          {% endblock %}
+          </div>
+        </main>
+
+    </body>
+
+
+
+</html>

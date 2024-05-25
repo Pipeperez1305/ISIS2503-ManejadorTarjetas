@@ -1,0 +1,13 @@
+{% extends 'Monitoring/base.html' %}
+
+{% block content %}
+    <br>
+  <h2>Actualizar Tarjeta</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <br>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success waves-effect waves-light btn-color-dark">Actualizar</button>
+    <button type="button" class="btn btn-danger waves-effect waves-light" style="background-color: #2271B3; color: white;" onclick="window.location.href='{% url 'tarjetaList' %}'">Atrás</button>
+  </form>
+{% endblock %}

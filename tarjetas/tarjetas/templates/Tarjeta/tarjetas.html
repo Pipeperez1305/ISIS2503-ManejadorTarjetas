@@ -1,0 +1,62 @@
+{% extends 'Monitoring/base.html' %}
+{% block content %}
+
+<div class="content">
+    <div class="">
+        <div class="page-header-title">
+            <br>
+            <h3 class="page-title">Tarjetas Disponibles</h3>
+        
+            {% comment %} <div style="text-align:right;">
+                <button type="button" class="btn btn-success waves-effect waves-light"
+                        onClick=" window.location.href='/tarjetacreate' " style="text-align:center;">+
+                </button>
+            </div> {% endcomment %}
+            
+        </div>
+    </div>
+
+    <br>
+
+    <div class="page-content-wrapper">
+        <div class="container">
+            <!-- Content page -->
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr style="color:#0E2EB0">
+                            <th>ID</th>
+                            <th>Tipo</th>
+                            <th>Puntaje</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for tarjeta  in tarjeta_list %}
+                        <tr>
+                            <td>{{ tarjeta.id }}</td>
+                            <td>{{ tarjeta.tipo }}</td>
+                            <td>{{ tarjeta.puntaje }}</td>
+                            <td>
+                                <a href="/tarjetaupdate/{{ tarjeta.id }}" class="btn btn-primary waves-effect waves-light">Editar</a>
+                                <form action="/tarjetadelete/{{ tarjeta.id }}/" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger waves-effect waves-light" style="background-color: dark-red; color: white;" onclick="return confirm('¿Estás seguro de querer eliminar esta tarjeta?');">Eliminar</button>
+                                </form>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
