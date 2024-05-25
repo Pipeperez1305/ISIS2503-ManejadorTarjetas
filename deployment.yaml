@@ -130,6 +130,6 @@ resources:
           sudo mkdir /labs
           cd /labs
           sudo git clone https://github.com/Pipeperez1305/ISIS2503-ManejadorTarjetas.git
-          cd ISIS2503-Microservices-AppDjango/tarjetasMongo
+          cd ISIS2503-ManejadorTarjetas/tarjetasMongo
           sudo pip3 install -r requirements.txt
 
