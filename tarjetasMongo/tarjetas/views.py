@@ -18,7 +18,7 @@ def TarjetaList(request):
     tarjetas = [{
             'id': str(tarjeta['_id']),  
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+            'puntaje': int(tarjeta.get('puntaje', 0))
         } for tarjeta in tarjetas_data]
     client.close()
     return render(request, 'Tarjeta/tarjetas.html', {'tarjeta_list': tarjetas})
@@ -64,7 +64,7 @@ def TarjetaUpdate(request, id):
     else:
         form = {
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+            'puntaje': int(tarjeta.get('puntaje', 0))
         }
         client.close()
         return render(request, 'Tarjeta/tarjetaUpdate.html', {'form': form, 'tarjeta_id': id})
@@ -80,7 +80,7 @@ def getTarjetaList(request):
         tarjetas = [{
             'id': str(tarjeta['_id']), 
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+              'puntaje': int(tarjeta.get('puntaje', 0))
         } for tarjeta in tarjetas_data]
 
         client.close()
@@ -100,7 +100,7 @@ def deleteTarjeta(request, id):
                 return HttpResponse('ID inválido', status=400)
             
             result = tarjetas_collection.delete_one({'_id': object_id})
-            if result.deleted_count > 0:
+            if result.deleted_count >= 0:
                 return HttpResponseRedirect(reverse('tarjetaList'))
             else:
                 return HttpResponse('No se pudo eliminar la tarjeta', status=404)
@@ -108,3 +108,28 @@ def deleteTarjeta(request, id):
             client.close()
     else:
         return HttpResponse('Método no permitido', status=405)
+    
+
+# def getTarjetasMinScore(request, min_score):
+#     if request.method == 'GET':
+#         try:
+#             min_score = int(min_score)
+#             client = MongoClient(settings.MONGO_CLI)
+#             db = client.tarjetas_db
+#             tarjetas_collection = db['tarjetas']
+#             # Asegúrate de que el puntaje se maneje como entero en la consulta
+#             query = {'puntaje': {'$gte': min_score}}
+#             tarjetas_data = tarjetas_collection.find(query)
+#             tarjetas = [
+#                 {
+#                     'id': str(tarjeta['_id']),
+#                     'tipo': tarjeta.get('tipo', ''),
+#                     # Convertir el puntaje a entero antes de enviarlo, si es necesario
+#                     'puntaje': int(tarjeta.get('puntaje', 0))
+#                 } for tarjeta in tarjetas_data
+#             ]
+
+#             client.close()
+#             return JsonResponse(tarjetas, safe=False)
+#         except ValueError:
+#             return HttpResponse("El valor proporcionado debe ser un número entero.", status=400)
