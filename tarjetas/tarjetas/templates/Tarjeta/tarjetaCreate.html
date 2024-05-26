@@ -2,7 +2,7 @@
 {% block content %}
 <br>
   <h2>Crear Tarjeta</h2>
-<form method="POST">
+<form method="POST" >
     {% csrf_token %}
     <br>
     {{ form.as_p }}

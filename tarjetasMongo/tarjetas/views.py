@@ -55,13 +55,19 @@ def TarjetaUpdate(request, id):
             'puntaje': request.POST.get('puntaje')
         }
         result = tarjetas_collection.update_one({'_id': ObjectId(id)}, {'$set': update_data})
+        client.close()
         if result.modified_count > 0:
-            messages.add_message(request, messages.SUCCESS, 'Tarjeta actualizada exitosamente')
+            messages.success(request, 'Tarjeta actualizada exitosamente')
             return HttpResponseRedirect(reverse('tarjetaList'))
         else:
-            messages.add_message(request, messages.ERROR, 'Error al actualizar la tarjeta')
-    client.close()
-    return render(request, 'Tarjeta/tarjetaUpdate.html', {'form': tarjeta})
+            messages.error(request, 'Error al actualizar la tarjeta')
+    else:
+        form = {
+            'tipo': tarjeta.get('tipo', ''),
+            'puntaje': tarjeta.get('puntaje', 0)
+        }
+        client.close()
+        return render(request, 'Tarjeta/tarjetaUpdate.html', {'form': form, 'tarjeta_id': id})
 
 
 def getTarjetaList(request):
@@ -81,16 +87,24 @@ def getTarjetaList(request):
         return JsonResponse(tarjetas, safe=False)
     
 
- 
+    
 def deleteTarjeta(request, id):
-    client = MongoClient(settings.MONGO_CLI)
-    db = client.tarjetas_db
-    tarjetas_collection = db['tarjetas']
-
     if request.method == 'POST':
-        result = tarjetas_collection.delete_one({'_id': ObjectId(id)})
-        if result.deleted_count > 0:
-            return HttpResponseRedirect(reverse('tarjetaList'))
-        else:
-            return HttpResponse('No se pudo eliminar la tarjeta')
-    client.close()
+        client = MongoClient(settings.MONGO_CLI)
+        try:
+            db = client.tarjetas_db
+            tarjetas_collection = db['tarjetas']
+            try:
+                object_id = ObjectId(id)
+            except:
+                return HttpResponse('ID inválido', status=400)
+            
+            result = tarjetas_collection.delete_one({'_id': object_id})
+            if result.deleted_count > 0:
+                return HttpResponseRedirect(reverse('tarjetaList'))
+            else:
+                return HttpResponse('No se pudo eliminar la tarjeta', status=404)
+        finally:
+            client.close()
+    else:
+        return HttpResponse('Método no permitido', status=405)

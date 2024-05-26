@@ -3,11 +3,19 @@
 {% block content %}
     <br>
   <h2>Actualizar Tarjeta</h2>
-  <form method="POST">
+  <form method="POST" action="{% url 'tarjetaUpdate' id=tarjeta_id %}">
     {% csrf_token %}
     <br>
-    {{ form.as_p }}
+    <div class="mb-3">
+      <label for="tipo" class="form-label">Tipo:</label>
+      <input type="text" name="tipo" class="form-control" id="tipo"  value="{{ form.tipo }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="puntaje" class="form-label">Puntaje:</label>
+      <input type="number" name="puntaje" class="form-control" id="puntaje" value="{{ form.puntaje }}" required>
+    </div>
     <button type="submit" class="btn btn-success waves-effect waves-light btn-color-dark">Actualizar</button>
     <button type="button" class="btn btn-danger waves-effect waves-light" style="background-color: #2271B3; color: white;" onclick="window.location.href='{% url 'tarjetaList' %}'">Atrás</button>
   </form>
 {% endblock %}
+

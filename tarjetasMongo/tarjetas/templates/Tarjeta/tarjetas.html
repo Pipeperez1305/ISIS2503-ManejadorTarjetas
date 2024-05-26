@@ -41,7 +41,7 @@
                             <td>{{ tarjeta.tipo }}</td>
                             <td>{{ tarjeta.puntaje }}</td>
                             <td>
-                                <a href="/tarjetaupdate/{{ tarjeta.id }}" class="btn btn-primary waves-effect waves-light">Editar</a>
+                                <a href="/tarjetaupdate/{{ tarjeta.id }}/" class="btn btn-primary waves-effect waves-light">Editar</a>
                                 <form action="/tarjetadelete/{{ tarjeta.id }}/" method="post" style="display: inline;">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger waves-effect waves-light" style="background-color: dark-red; color: white;" onclick="return confirm('¿Estás seguro de querer eliminar esta tarjeta?');">Eliminar</button>
